@@ -1,0 +1,165 @@
+SystemName                   tran           # Descriptive name of the system
+SystemLabel                  tran           # Short name for naming files
+
+NumberOfSpecies              1             # Number of species
+NumberOfAtoms                304           # Number of atoms
+
+%block ChemicalSpeciesLabel
+ 1  79   Au  
+%endblock ChemicalSpeciesLabel
+
+# ps
+%block Ps.lmax
+ Au      3
+%endblock Ps.lmax
+
+# Basis
+#PAO.BasisType                split         # Type of basis ('nones', 'nonodes', 'split')
+#PAO.SplitNorm  0.15
+#PAO.EnergyShift              10 meV
+#PAO.BasisSize                SZP
+
+%block PAO.Basis                           # basis
+Au     3     0.025                  # Species label, number of l-shells
+ n=6   0   1    E  99.0 3.76
+   6.520
+   1.000
+ n=6   1   1    E  54.3 3.96
+   6.90
+   1.000
+ n=5   2   1    E  54.3 4.11                       # n, l, Nzeta
+   6.180
+   1.000
+%endblock PAO.Basis
+
+
+# lattice vectors
+LatticeConstant              1.0 Ang
+
+# coordinates
+AtomicCoordinatesFormat      Ang
+
+# constrains in relaxation
+#%block GeometryConstraints
+#   position   from  1 to  84
+#   position   from  -1 to  -28
+#%endblock GeometryConstraints
+
+# real space mesh grid
+MeshCutoff                   250.0 Ry
+#%block GridCellSampling
+#  0.5  0.5   0.0
+#  0.5  0.0   0.5
+#  0.0  0.5   0.5
+#%endblock GridCellSampling
+
+# reciprocal space
+%block kgrid_Monkhorst_Pack
+  1   0    0    0.0
+  0   1    0    0.0
+  0   0    1    0.0
+%endblock kgrid_Monkhorst_Pack
+
+#ProcessorY                   4
+#BlockSize                    100
+
+
+# functional
+xc.functional                GGA           # 'LDA', 'GGA'
+xc.authors                   PBE           # 'CA'='PZ', 'PW92', 'PBE'
+
+# scf
+MaxSCFIterations             1000
+DM.MixingWeight              0.02
+DM.Tolerance                 1.0E-4
+DM.UseSaveDM                 T
+DM.NumberPulay               10             # Pulay convergency accelerator
+
+SolutionMethod               diagon 
+ElectronicTemperature        300 K         # Default value
+
+# MD options
+MD.TypeOfRun                 cg            # Type of dynamics:
+MD.VariableCell              false         # if vary cell
+MD.NumCGsteps                0             # Number of CG steps for relaxation
+MD.MaxCGDispl                0.08 Ang     # Maximum atomic displacement at one step
+MD.MaxForceTol               0.03 eV/Ang   # Tolerance in the maximum force min(fx, fy, fz)
+MD.MaxStressTol              0.02 Gpa
+
+#SpinPolarized     T
+#FixSpin                F
+#%block DM.InitSpin
+#1 +
+#2 +
+#%endblock DM.InitSpin
+
+#Siesta Output Flags
+SaveHS                       T           # Hamiltonian and overlap in sparse
+SaveRHO                      T
+WriteMullikenPop             1
+WriteForces                  T
+WriteCoorStep                T
+SaveElectrostaticPotential   T             # Hartree Potential file
+SaveDeltaRho                 T
+WriteEigenvalues             T  
+
+# ===========================================================
+##For Smeagol-transort
+#SetBulkTransvCell           T             # Let transport system periodical in x and y
+InitTransport                F             # reset "nsc process" as siesta or not,'true' as siesta
+EMTransport                  T             # NEGF method or not
+NSlices                      1             # the number of layers for x in mx
+PeriodicTransp               T             # mx periodic calculation or not
+SaveMemTranspK               F             # F for lead's self-energy first calculated and saved in memeory; 
+                                           # while 'T' for calculating every scf, to save memeory
+
+#GF Integral Setup
+NEnergReal                   0             # E-points for NE, at the precence of bias
+NEnergImCircle               32            # E-points  for  EQ-Circle
+NEnergImLine                 32            # E-points for EQ-Line
+NPoles                       32            # E-points for EQ-Pole
+Delta                        1.d-6
+EnergLowestBound            -150.00 eV   # lower limit for integral
+
+
+FullRamp                     T
+MixHamiltonian               F
+ReadHamiltonian              F             # Hamiltonian, not recommended while bias
+DM.MixSCF1                   T
+
+#Bias Setup
+VInitial                     0.0 eV
+VFinal                       0.0 eV
+NIVPoints                    0             # number of bias, excluding the first one
+
+# information of each bias, prefix with the bias number
+%block SaveBiasSteps
+ 0
+%endblock SaveBiasSteps
+
+
+# Fock shift Control
+HartreeLeadsBottom        -16.39778137  eV    # pot.sh, level the VH potentials of lead and transport system
+HartreeLeadsLeft             0.000  Ang    # 
+HartreeLeadsRight            0.000  Ang    # z starts from 0, set both 0
+
+
+# Necessity for Structural Relaxation, current-induced force
+EM.CalculateForces            F
+#SaveDMForIV                  T
+
+
+#Transport Output Flags
+TrCoefficients               T             # generate '*.TRC' file or not
+TransmissionOverk            T             # generate '*.TRC.k.up/down' file,containning infor about T(E,k)
+TRCScaleEf                   T             # if set the Fermi level zero
+NTransmPoints                600           # number of energy points
+InitTransmRange             -3.0 eV
+FinalTransmRange             3.0 eV
+
+#MD.TRCSkip                   0
+#MD.TRCSampling               5
+
+
+TRC.EMDOS              T
+TRC.EMPDOS             T

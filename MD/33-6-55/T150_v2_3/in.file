@@ -1,0 +1,51 @@
+units		metal
+dimension	3
+boundary	p p p
+
+atom_style	atomic
+neighbor	2.0 bin
+timestep        0.0014
+
+read_data       Au100_layers_test.data     
+region upper block INF INF INF INF 21 INF units box
+region low block INF INF INF INF INF 9 units box
+group upper region upper
+group low region low
+group boundary union upper low
+group mobile subtract all boundary
+
+# LJ potentials
+
+pair_style	deepmd Au-Ag-6-0__12-16-21.pb
+pair_coeff     * *
+
+
+# initial velocities
+velocity mobile  create 150 37797
+fix 1 boundary setforce 0.0 0.0 0.0
+velocity upper set 0 0 0 units box
+velocity low set 0 0 0 units box
+
+fix 2 boundary nve/noforce
+fix 3 mobile nvt temp 150 150 0.01
+dump 1 all atom 100 relax.atom
+thermo          1000
+run 50000
+
+unfix 2
+unfix 3
+undump 1
+reset_timestep 0
+
+fix 4 boundary nve/noforce
+fix 3 mobile nvt temp 150 150 0.01
+
+
+velocity upper set 0 0 0.02 units box
+velocity low set 0 0 -0.02 units box
+
+dump 1 all atom 2000 dump.atom
+# run
+
+thermo		1000
+run		600000
