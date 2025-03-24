@@ -43,5 +43,5 @@ sh cattran.sh
 python cnpy.py   # The output is tran.npy
 ```
   
-`train.py` is the main script for training.
-`model.py` contains the structures of neural networks. 
+`train.py` is the main script for training.  
+`model.py` contains the structures of neural networks.   
