@@ -1,6 +1,6 @@
 # Transformer_gold_nanowires  
 ## MD  
-`AA-B-CC/` means the gold nanowire with B monatomic layers in a A×A in-plane supercell, electrodes with a cross section of C×C  
+`~/MD/AA-B-CC/` means the gold nanowire with B monatomic layers in a A×A in-plane supercell, electrodes with a cross section of C×C  
   
 `T150_v2_1/` means temperature 150K, velocity 2m/s, trial No.1  
   
