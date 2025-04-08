@@ -4,8 +4,8 @@ LAMMPS data file. msi2lmp v3.9.9 / 05 Nov 2018 / CGCMM for Au100_tran
 
    1 atom types
 
-0.000000000  14.698065758  xlo  xhi
-0.000000000  14.698065758  ylo  yhi
+0.000000000  14.778499604  xlo  xhi
+0.000000000  14.778499604  ylo  yhi
   -100.000000000   133.44 zlo zhi
 
 Masses
