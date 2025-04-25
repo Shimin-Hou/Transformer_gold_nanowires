@@ -1,4 +1,7 @@
 # Transformer_gold_nanowires  
+
+Please cite [Dongying Lin, Jijie Zou, Yangyu Dong, Yudi Wang, Yongfeng Wang, Stefano Sanvitoc and Shimin Hou，Transformer-based deep learning structure–conductance relationships in gold and silver nanowires, Physical Chemstry Chemical Physics, 2025, DOI: 10.1039/d4cp04605f](https://pubs.rsc.org/en/content/articlelanding/2025/cp/d4cp04605f) for using this Transformer neural network.  
+
 ## MD  
 `~/MD/AA-B-CC/` means the gold nanowire with B monatomic layers in a A×A in-plane supercell, electrodes with a cross section of C×C  
   
@@ -16,6 +19,9 @@ MD simulation results:
 relax.atom   # trajectory of thermal equilibrium process  
 dump.atom    # trajectory of elongating process
 ```
+
+Please cite [C. M. Andolina, M. Bon, D. Passerone and W. A. Saidi, Robust, Multi-Length-Scale, Machine Learning Potential for Ag–Au Bimetallic Alloys from Clusters to Bulk Materials, J. Phys. Chem. C, 2021, 125, 17438–17447](https://pubs.acs.org/doi/10.1021/acs.jpcc.1c04403) for using this Au/Ag neural-network potential.  
+
   
 ## DFT_NEGF  
 Input files for calculating Au lead are in `lead/` directory. The output `bulklft.DAT`, `bulkrgt.DAT`, `lead.DM` and `lead.HST` are used in `1_1-128/temp/.` for transport calculations.  
